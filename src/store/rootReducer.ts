@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import user from './slices/userSlice'
+import art from './slices/artSlice'
 
 const rootReducer = combineReducers({
-	user
+	art
 })
 
 export type RootState = ReturnType<typeof rootReducer>
