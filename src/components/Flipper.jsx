@@ -14,15 +14,15 @@ function Card({ flip, text, image }) {
 
 	const printableText = text.split('*_*').map((value, index) => {
 		return (
-		  <span key={index}>
-			{value}
-			<br />
-		  </span>
-		);
-	  }) 
+			<span key={index}>
+				{value}
+				<br />
+			</span>
+		)
+	})
 
 	return (
-		<div>
+		<Container>
 			<Front
 				class="c back"
 				style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
@@ -36,11 +36,16 @@ function Card({ flip, text, image }) {
 					transform: transform.interpolate(t => `${t} rotateX(180deg)`)
 				}}
 			>
-				{ printableText }
+				{printableText}
 			</Back>
-		</div>
+		</Container>
 	)
 }
+
+const Container = styled.div`
+	width: 100px;
+    height: 100px;
+`
 
 const c = styled(a.div)`
 	position: absolute;
@@ -51,6 +56,7 @@ const c = styled(a.div)`
 `
 
 const Back = styled(c)`
+	z-index: 20px;
 	background-size: cover;
 	background-color: #ffffff;
 	display: flex;
@@ -59,8 +65,10 @@ const Back = styled(c)`
 	justify-content: center;
 `
 const Front = styled(c)`
+	max-width: 100%;
+    max-height: 100%;	
 	background-size: cover;
-	background-image: url(${({image}) => image});
+	background-image: url(${({ image }) => image});
 `
 
 export default Card

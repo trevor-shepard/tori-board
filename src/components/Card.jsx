@@ -8,8 +8,6 @@ import { useWindowDimensions } from 'utils/windowUtils'
 document.addEventListener('gesturestart', e => e.preventDefault())
 document.addEventListener('gesturechange', e => e.preventDefault())
 
-
-
 const Card = ({ start, height, width, text, image }) => {
 	const domTarget = React.useRef(null)
 	const [mouseDown, setMouseDown] = useState(false)
@@ -25,13 +23,22 @@ const Card = ({ start, height, width, text, image }) => {
 		config: { mass: 5, tension: 350, friction: 40 }
 	}))
 
+
 	const bind = useGesture(
 		{
-			onDrag: ({ movement: [x, y], initial: [startx, starty] }) => {
+			
+			onDrag: ({ offset: [xDelta, yDelta], initial: [initialx, initialy] }) => {
 				if (!flip) {
-				
+					if (xDelta === 0 && yDelta === 0) return
 					
-					set({ x: x + startx - width / 2, y: y + starty - height / 2, scale: 1 })
+					const setx =  xDelta + start[0]
+					const sety =  yDelta + start[1]
+
+					set({
+						x: setx,
+						y: sety,
+						scale: 1
+					})
 				}
 			},
 
@@ -46,9 +53,12 @@ const Card = ({ start, height, width, text, image }) => {
 
 	useEffect(() => {
 		if (flip) {
-			set({ x: windowWidth - width - ((windowWidth / 100)* 40), y: ((windowHeight / 100)* 10), scale: 1 })
+			// set({
+			// 	x: windowWidth - width - 100,
+			// 	y: 100 ,
+			// 	scale: 1
+			// })
 		} else {
-			
 			set({ x: prevCoordinates[0], y: prevCoordinates[1], scale: 1 })
 		}
 	}, [flip])
@@ -57,8 +67,8 @@ const Card = ({ start, height, width, text, image }) => {
 
 	return (
 		<AnimatedContainer
-			height={!flip ? height :  ((windowHeight / 100)* 80)}
-			width={!flip ? width :  ((windowWidth / 100)* 40)}
+			height={!flip ? height : (windowHeight / 100) * 80}
+			width={!flip ? width : (windowWidth / 100) * 40}
 			ref={domTarget}
 			style={{ x, y, scale }}
 			onMouseUp={() => {
@@ -85,10 +95,13 @@ const AnimatedContainer = styled(animated.div)`
 	box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
 	transition: box-shadow 0.5s, opacity 0.5s;
 	will-change: transform;
-	border: 10px solid white;
+	background-color: #ffffff;
 	cursor: grab;
 	overflow: hidden;
 	touch-action: none;
+	position: absolute;
+	${({flip}) => flip && 'top: 10px;'}
+	${({flip}) => flip && 'left: 10px;'}
 `
 
 export default Card

@@ -1,6 +1,7 @@
-import React, { FunctionComponent, useEffect} from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import styled from '@emotion/styled'
 import Card from 'components/Card'
+import Modal from 'components/Modal'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { subscribeToArts } from 'store/slices/artSlice'
@@ -14,18 +15,16 @@ const Board: FunctionComponent = () => {
 		}
 	}, [])
 
-	const Cards = Object.values(arts).map(({x, y, text, image}) => {
+	const Cards = Object.values(arts).map(({ x, y, text, image }, i) => {
+		return (
+			<Card key={`${i}-art-card`} text={text} image={image} start={[x, y]} height={100} width={100} />
 	
-	
-	return <Card text={text} image={image} start={[x, y]} height={100} width={100} />
+		)
+	})
 
-})
-	
-	return (
-		<Container>
-			{Cards}
-		</Container>
-	)
+	return <Container>
+		<Modal />
+		{Cards}</Container>
 }
 
 const Container = styled.div`
