@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useSpring, animated as a } from 'react-spring'
-import { Add } from 'assets/icons'
+import { Add, Close } from 'assets/icons'
 import { useDispatch } from 'react-redux'
 import { useWindowDimensions } from 'utils/windowUtils'
 import { createArt } from 'store/slices/artSlice'
@@ -15,6 +15,7 @@ const Modal = () => {
 	const [error, setError] = useState('')
 	const [imageAsFile, setImageAsFile] = useState(null)
 	const [fileAsImage, setFileAsImage] = useState(null)
+	const [loading, setLoading] = useState(false)
 
 	// hooks/springs
 	const dispatch = useDispatch()
@@ -40,24 +41,36 @@ const Modal = () => {
 	}
 
 	const handleSubmit = async () => {
-		await dispatch(
-			createArt(
-				title,
-				text,
-				imageAsFile,
-				Math.floor(Math.random() * windowWidth - 400),
-				Math.floor(Math.random() * windowHeight - 400)
+		try {
+			setLoading(true)
+			await dispatch(
+				createArt(
+					title,
+					text,
+					imageAsFile,
+					Math.abs(Math.floor(Math.random() * windowWidth - 400)),
+					Math.abs(Math.floor(Math.random() * windowHeight - 400))
+				)
 			)
-		)
+			setshow(false)
+			settext('')
+			settitle('')
+			setError('')
+			setImageAsFile(null)
+			setFileAsImage(null)
+		} catch (error) {
+			setError('whoops try again')
+			setLoading(false)
+		}
 	}
 
 	return (
-		<div>
+		<>
 			<Front
 				onClick={() => setshow(true)}
 				style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
 			>
-				<img src={Add} />
+				<img alt='add' src={Add} />
 			</Front>
 
 			<Back
@@ -69,28 +82,55 @@ const Modal = () => {
 				left={windowWidth - (windowWidth / 100) * 80}
 				top={windowHeight - (windowHeight / 100) * 80}
 			>
-				<Input
-					label={'title'}
-					handleInput={e => settitle(e.target.value)}
-					value={title}
-				/>
-				<TextArea
-					placeholder={'text'}
-					onChange={e => settext(e.target.value)}
-					value={text}
-				/>
-				{fileAsImage && (
-					<ImgContainer>
-						<Image src={fileAsImage} />
-					</ImgContainer>
+				{loading ? (
+					<div>loading</div>
+				) : (
+					<>
+						{' '}
+						<TitleBar>
+							<div></div>
+							<>
+								your thoughts {'('}or whatever you want it to say here{')'}?
+							</>
+							<CloseComp src={Close} onClick={() => setshow(false)} />
+						</TitleBar>
+						<Input
+							label={'title'}
+							handleInput={e => settitle(e.target.value)}
+							value={title}
+						/>
+						<TextArea
+							placeholder={'text'}
+							onChange={e => settext(e.target.value)}
+							value={text}
+						/>
+						{fileAsImage && (
+							<ImgContainer>
+								<Image src={fileAsImage} />
+							</ImgContainer>
+						)}
+						<FileInput id="upload" type="file" onChange={handleImageAsFile} />
+						{error}
+						<SubmitButton onClick={handleSubmit}>submit</SubmitButton>{' '}
+					</>
 				)}
-				<FileInput id="upload" type="file" onChange={handleImageAsFile} />
-				{error}
-				<SubmitButton onClick={handleSubmit}>submit</SubmitButton>
 			</Back>
-		</div>
+		</>
 	)
 }
+
+const TitleBar = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+`
+
+const CloseComp = styled.img`
+	height: 20px;
+	width: 20px;
+	margin: 5px;
+`
 
 const c = styled(a.div)`
 	position: absolute;
@@ -163,14 +203,6 @@ const TextArea = styled.textarea`
 	text-transform: uppercase;
 	background-color: #ffffff;
 	height: 60%;
-
-	/* &:focus ~ .floating-label{
-        top: 8px;
-        bottom: 10px;
-        left: 20px;
-        font-size: 11px;
-        opacity: 1;
-    } */
 `
 
 export default Modal

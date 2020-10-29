@@ -17,9 +17,9 @@ function App() {
 	return (
 		<div className="App">
 			<Provider store={store}>
-				{/* <PersistGate loading={null} persistor={persistor}> */}
-				<Board />
-				{/* </PersistGate> */}
+				<PersistGate loading={null} persistor={persistor}>
+					<Board />
+				</PersistGate>
 			</Provider>
 		</div>
 	)

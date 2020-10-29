@@ -20,7 +20,6 @@ const art = createSlice({
 		recieveArts(state, action: PayloadAction<ArtState>) {
 			const arts = action.payload
 			return {
-				...state,
 				...arts
 			}
 		},
@@ -31,7 +30,7 @@ const art = createSlice({
 	}
 })
 
-export const { recieveArt, recieveArts } = art.actions
+export const { recieveArt, recieveArts, clear } = art.actions
 
 export default art.reducer
 

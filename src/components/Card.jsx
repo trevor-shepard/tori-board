@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSpring, animated } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
 import Flipper from './Flipper'
@@ -8,16 +8,11 @@ import { useWindowDimensions } from 'utils/windowUtils'
 document.addEventListener('gesturestart', e => e.preventDefault())
 document.addEventListener('gesturechange', e => e.preventDefault())
 
-const interp = i => r =>
-	`translate3d(${15 * Math.sin(r + (i * 2 * Math.PI) / 1.6)}px, ${15 *
-		Math.sin(r + (i * 2 * Math.PI) / 1.6)}px, 0)`
-
 const Card = ({ start, height, width, text, image }) => {
 	// state
 	const domTarget = React.useRef(null)
 	const [mouseDown, setMouseDown] = useState(false)
 	const [flip, setFlipped] = React.useState(false)
-	const [prevCoordinates, setPrevCoordinates] = useState(start)
 
 	// hooks
 	const { windowWidth, windowHeight } = useWindowDimensions()
@@ -55,18 +50,6 @@ const Card = ({ start, height, width, text, image }) => {
 		{ domTarget, eventOptions: { passive: false } }
 	)
 
-	useEffect(() => {
-		if (flip) {
-			// set({
-			// 	x: windowWidth - width - 100,
-			// 	y: 100 ,
-			// 	scale: 1
-			// })
-		} else {
-			set({ x: prevCoordinates[0], y: prevCoordinates[1], scale: 1 })
-		}
-	}, [flip])
-
 	React.useEffect(bind, [bind])
 
 	return (
@@ -74,13 +57,15 @@ const Card = ({ start, height, width, text, image }) => {
 			height={!flip ? height : (windowHeight / 100) * 80}
 			width={!flip ? width : (windowWidth / 100) * 40}
 			ref={domTarget}
-			style={{ x, y, scale}}
+			style={{ x, y, scale }}
+			flip={flip}
 			onMouseUp={() => {
 				if (!mouseDown) return setMouseDown(moment())
 				const duration = moment().diff(mouseDown, 'seconds')
 
 				if (duration < 1) {
 					setFlipped(!flip)
+					setMouseDown(false)
 				} else {
 					setMouseDown(moment())
 				}
@@ -101,9 +86,9 @@ const AnimatedContainer = styled(animated.div)`
 	cursor: grab;
 	overflow: hidden;
 	touch-action: none;
-	position: absolute;
-	${({ flip }) => flip && 'top: 10px;'}
-	${({ flip }) => flip && 'left: 10px;'}
+	position: ${({ flip }) => (flip ? 'fixed' : 'absolute')};
+	${({ flip }) => flip && 'border: 10px solid grey;'}
+	${({ flip }) => flip && 'z-index: 20;'}
 `
 
 export default Card
