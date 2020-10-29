@@ -17,6 +17,10 @@ body {
 	font-family: 'Arimo';
 	src: local('Arimo'), url(./fonts/Arimo-Regular.ttf) format('truetype');
 }
+@font-face {
+	font-family: 'Amiri';
+	src: local('Amiri'), url(./fonts/Amiri-Regular.ttf) format('truetype');
+}
 
 code {
 	font-family: 'Open Sans', source-code-pro, Menlo, Monaco, Consolas,
