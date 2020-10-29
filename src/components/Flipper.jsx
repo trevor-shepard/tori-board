@@ -63,12 +63,14 @@ const Back = styled(c)`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	border: 10px solid grey;
 `
 const Front = styled(c)`
 	max-width: 100%;
 	max-height: 100%;
 	background-size: cover;
 	background-image: url(${({ image }) => image});
+	
 `
 
 export default Card
