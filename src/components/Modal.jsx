@@ -15,7 +15,6 @@ const Modal = () => {
 	const [error, setError] = useState('')
 	const [imageAsFile, setImageAsFile] = useState(null)
 	const [fileAsImage, setFileAsImage] = useState(null)
-	
 
 	// hooks/springs
 	const dispatch = useDispatch()
@@ -41,9 +40,16 @@ const Modal = () => {
 	}
 
 	const handleSubmit = async () => {
-		await dispatch(createArt(title, text, imageAsFile, Math.floor(Math.random() * windowWidth - 400), Math.floor(Math.random() * windowHeight - 400)))
+		await dispatch(
+			createArt(
+				title,
+				text,
+				imageAsFile,
+				Math.floor(Math.random() * windowWidth - 400),
+				Math.floor(Math.random() * windowHeight - 400)
+			)
+		)
 	}
-
 
 	return (
 		<div>
@@ -96,7 +102,7 @@ const c = styled(a.div)`
 const Back = styled(c)`
 	background-size: cover;
 	background-color: #ffffff;
-	display: ${({show}) =>  show ? 'flex' : 'none'};
+	display: ${({ show }) => (show ? 'flex' : 'none')};
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
@@ -137,9 +143,6 @@ const SubmitButton = styled.button`
 	padding: 10px;
 	background-color: #ffffff;
 `
-
-
-
 
 const TextArea = styled.textarea`
 	font-family: AmsiPro-Ultra;

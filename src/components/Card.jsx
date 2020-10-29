@@ -8,12 +8,18 @@ import { useWindowDimensions } from 'utils/windowUtils'
 document.addEventListener('gesturestart', e => e.preventDefault())
 document.addEventListener('gesturechange', e => e.preventDefault())
 
+const interp = i => r =>
+	`translate3d(${15 * Math.sin(r + (i * 2 * Math.PI) / 1.6)}px, ${15 *
+		Math.sin(r + (i * 2 * Math.PI) / 1.6)}px, 0)`
+
 const Card = ({ start, height, width, text, image }) => {
+	// state
 	const domTarget = React.useRef(null)
 	const [mouseDown, setMouseDown] = useState(false)
 	const [flip, setFlipped] = React.useState(false)
 	const [prevCoordinates, setPrevCoordinates] = useState(start)
 
+	// hooks
 	const { windowWidth, windowHeight } = useWindowDimensions()
 
 	const [{ x, y, scale }, set] = useSpring(() => ({
@@ -23,16 +29,14 @@ const Card = ({ start, height, width, text, image }) => {
 		config: { mass: 5, tension: 350, friction: 40 }
 	}))
 
-
 	const bind = useGesture(
 		{
-			
 			onDrag: ({ offset: [xDelta, yDelta], initial: [initialx, initialy] }) => {
 				if (!flip) {
 					if (xDelta === 0 && yDelta === 0) return
-					
-					const setx =  xDelta + start[0]
-					const sety =  yDelta + start[1]
+
+					const setx = xDelta + start[0]
+					const sety = yDelta + start[1]
 
 					set({
 						x: setx,
@@ -70,7 +74,7 @@ const Card = ({ start, height, width, text, image }) => {
 			height={!flip ? height : (windowHeight / 100) * 80}
 			width={!flip ? width : (windowWidth / 100) * 40}
 			ref={domTarget}
-			style={{ x, y, scale }}
+			style={{ x, y, scale}}
 			onMouseUp={() => {
 				if (!mouseDown) return setMouseDown(moment())
 				const duration = moment().diff(mouseDown, 'seconds')
@@ -100,8 +104,8 @@ const AnimatedContainer = styled(animated.div)`
 	overflow: hidden;
 	touch-action: none;
 	position: absolute;
-	${({flip}) => flip && 'top: 10px;'}
-	${({flip}) => flip && 'left: 10px;'}
+	${({ flip }) => flip && 'top: 10px;'}
+	${({ flip }) => flip && 'left: 10px;'}
 `
 
 export default Card

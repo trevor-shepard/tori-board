@@ -17,14 +17,23 @@ const Board: FunctionComponent = () => {
 
 	const Cards = Object.values(arts).map(({ x, y, text, image }, i) => {
 		return (
-			<Card key={`${i}-art-card`} text={text} image={image} start={[x, y]} height={100} width={100} />
-	
+			<Card
+				key={`${i}-art-card`}
+				text={text}
+				image={image}
+				start={[x, y]}
+				height={100}
+				width={100}
+			/>
 		)
 	})
 
-	return <Container>
-		<Modal />
-		{Cards}</Container>
+	return (
+		<Container>
+			<Modal />
+			{Cards}
+		</Container>
+	)
 }
 
 const Container = styled.div`

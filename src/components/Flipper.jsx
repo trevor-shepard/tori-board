@@ -44,7 +44,7 @@ function Card({ flip, text, image }) {
 
 const Container = styled.div`
 	width: 100px;
-    height: 100px;
+	height: 100px;
 `
 
 const c = styled(a.div)`
@@ -66,7 +66,7 @@ const Back = styled(c)`
 `
 const Front = styled(c)`
 	max-width: 100%;
-    max-height: 100%;	
+	max-height: 100%;
 	background-size: cover;
 	background-image: url(${({ image }) => image});
 `

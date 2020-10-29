@@ -68,7 +68,6 @@ export const subscribeToArts = (dispatch: Dispatch<any>) => {
 	return unsubscribe
 }
 
-
 export const createArt = (
 	title: string,
 	text: string,
@@ -76,12 +75,11 @@ export const createArt = (
 	x: number,
 	y: string
 ): AppThunk => async dispatch => {
-
 	try {
 		const ref = await db.collection('arts').doc()
 
 		const image = await handleFireBaseUpload(`title/${title}-${ref.id}`, photo)
-		
+
 		const art = {
 			title,
 			text,
@@ -92,18 +90,12 @@ export const createArt = (
 		}
 
 		await ref.set(art)
-
 	} catch (error) {
 		debugger
 	}
-	
-
-
-
 }
 
 export const handleFireBaseUpload = async (path: string, photo: File) => {
-	
 	console.log('start of upload')
 	if (photo === null)
 		throw Error(`not an image, the image file is a ${typeof photo}`)
