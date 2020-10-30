@@ -12,7 +12,7 @@ function Card({ flip, text, image }) {
 		top: flip ? '100px' : '0'
 	})
 
-	const printableText = text.split('*_*').map((value, index) => {
+	const printableText = text.split('*').map((value, index) => {
 		return (
 			<span key={index}>
 				{value}
