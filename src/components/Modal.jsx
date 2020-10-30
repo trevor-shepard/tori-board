@@ -48,8 +48,8 @@ const Modal = () => {
 					title,
 					text,
 					imageAsFile,
-					Math.abs(Math.floor(Math.random() * windowWidth - 400)),
-					Math.abs(Math.floor(Math.random() * windowHeight - 400))
+					Math.abs(Math.floor(Math.random() * windowWidth)),
+					Math.abs(Math.floor(Math.random() * windowHeight ))
 				)
 			)
 			setshow(false)
