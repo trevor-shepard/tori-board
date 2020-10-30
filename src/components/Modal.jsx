@@ -200,7 +200,6 @@ const TextArea = styled.textarea`
 	padding: 5px;
 	border: none;
 	border-bottom: 6px solid #271600;
-	text-transform: uppercase;
 	background-color: #ffffff;
 	height: 60%;
 `

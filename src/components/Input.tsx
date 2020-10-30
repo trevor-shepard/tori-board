@@ -65,7 +65,6 @@ const Input = styled.input<InputProps>`
 	padding: 5px;
 	border: none;
 	border-bottom: 6px solid #271600;
-	text-transform: uppercase;
 	background-color: #ffffff;
 	/* &:focus ~ .floating-label{
         top: 8px;
