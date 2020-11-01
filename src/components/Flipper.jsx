@@ -25,7 +25,7 @@ function Card({ flip, text, image }) {
 		<Container>
 			<Front
 				class="c back"
-				style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
+				style={{ opacity: opacity.to(o => 1 - o), transform }}
 				image={image}
 			/>
 
@@ -33,7 +33,7 @@ function Card({ flip, text, image }) {
 				class="c front"
 				style={{
 					opacity,
-					transform: transform.interpolate(t => `${t} rotateX(180deg)`)
+					transform: transform.to(t => `${t} rotateX(180deg)`)
 				}}
 			>
 				{printableText}
@@ -63,6 +63,7 @@ const Back = styled(c)`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	
 `
 const Front = styled(c)`
 	max-width: 100%;

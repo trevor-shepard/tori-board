@@ -28,6 +28,7 @@ const Card = ({ start, height, width, text, image }) => {
 		{
 			onDrag: ({ offset: [xDelta, yDelta], initial: [initialx, initialy] }) => {
 				if (!flip) {
+					
 					if (xDelta === 0 && yDelta === 0) return
 
 					const setx = xDelta + start[0]
@@ -54,7 +55,7 @@ const Card = ({ start, height, width, text, image }) => {
 
 	return (
 		<AnimatedContainer
-			height={!flip ? height : (windowHeight / 100) * 80}
+			height={!flip ? height : (windowHeight / 100) * 40}
 			width={!flip ? width : (windowWidth / 100) * 40}
 			ref={domTarget}
 			style={{ x, y, scale }}
@@ -77,8 +78,8 @@ const Card = ({ start, height, width, text, image }) => {
 }
 
 const AnimatedContainer = styled(animated.div)`
-	width: ${({ width }) => `${width}px`};
-	height: ${({ height }) => `${height}px`};
+	height: ${({height}) => height}px;
+	width: ${({width}) => width}px;
 	background: grey;
 	border-radius: 5px;
 	will-change: transform;

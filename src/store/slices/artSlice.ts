@@ -90,7 +90,7 @@ export const createArt = (
 
 		await ref.set(art)
 	} catch (error) {
-		debugger
+		
 	}
 }
 

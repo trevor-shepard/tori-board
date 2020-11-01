@@ -70,7 +70,7 @@ const Modal = () => {
 				onClick={() => setshow(true)}
 				style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
 			>
-				<img alt='add' src={Add} />
+				<AddIcon alt='add' src={Add} />
 			</Front>
 
 			<Back
@@ -172,7 +172,11 @@ const Image = styled.img`
 `
 
 const Front = styled(c)`
-	background-size: cover;
+	
+`
+const AddIcon = styled.img`
+	height: 20px;
+	width: 20px;
 `
 
 const SubmitButton = styled.button`
