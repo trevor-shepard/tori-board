@@ -55,8 +55,8 @@ const Card = ({ start, height, width, text, image }) => {
 
 	return (
 		<AnimatedContainer
-			height={!flip ? height : (windowHeight / 100) * 40}
-			width={!flip ? width : (windowWidth / 100) * 40}
+			height={!flip ? height : (windowHeight / 100) * 30}
+			width={!flip ? width : (windowWidth / 100) * 30}
 			ref={domTarget}
 			style={{ x, y, scale }}
 			flip={flip}
