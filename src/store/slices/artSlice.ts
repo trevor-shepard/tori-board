@@ -72,7 +72,8 @@ export const createArt = (
 	text: string,
 	photo: File,
 	x: number,
-	y: string
+	y: number,
+	size: 'small' | 'medium' | 'large'
 ): AppThunk => async dispatch => {
 	try {
 		const ref = await db.collection('arts').doc()
@@ -85,13 +86,24 @@ export const createArt = (
 			image,
 			x,
 			y,
+			size,
 			id: ref.id
 		}
 
 		await ref.set(art)
-	} catch (error) {
-		
-	}
+	} catch (error) {}
+}
+
+export const updatePosition = async (id: string, x: number, y: number) => {
+	try {
+		await db
+			.collection('arts')
+			.doc(id)
+			.update({
+				x,
+				y
+			})
+	} catch (error) {}
 }
 
 export const handleFireBaseUpload = async (path: string, photo: File) => {

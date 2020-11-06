@@ -5,6 +5,7 @@ export interface Art {
 	x: number
 	y: number
 	id: string
+	size: 'small' | 'medium' | 'large'
 }
 
 export interface ArtState {
