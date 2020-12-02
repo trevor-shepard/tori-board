@@ -41,7 +41,7 @@ const Container = styled(animated.div)`
 	${({ show }) => !show && 'display: none;'}
 `
 const Title = styled.div`
-	font-family: Amari;
+	font-family: Amiri;
 	margin-top: 20px;
 	margin-bottom: 20px;
 `

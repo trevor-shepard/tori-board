@@ -107,7 +107,6 @@ export const updatePosition = async (id: string, x: number, y: number) => {
 }
 
 export const handleFireBaseUpload = async (path: string, photo: File) => {
-	console.log('start of upload')
 	if (photo === null)
 		throw Error(`not an image, the image file is a ${typeof photo}`)
 	const downloadURL = await storage
